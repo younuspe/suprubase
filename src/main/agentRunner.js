@@ -100,9 +100,14 @@ class AgentRunner {
       const process = agentData.process;
       process.kill('SIGTERM');
       await new Promise(resolve => setTimeout(resolve, 1000));
-      if (!process.killed) {
+
+      // `process.killed` is true immediately after sending SIGTERM, so it is
+      // not a valid check for whether the child is still alive. Use the exit
+      // state instead to decide whether to force-kill the process.
+      if (process.exitCode === null) {
         process.kill('SIGKILL');
       }
+
       this._emitAgentEvent(agentId, 'stopped');
       // Remove from running processes after stopping, but keep buffers
       this.runningProcesses.delete(agentId);
