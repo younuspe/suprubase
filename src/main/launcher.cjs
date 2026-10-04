@@ -1,100 +1,137 @@
-// Electron launcher - patches require('electron') BEFORE main loads
-// Run with: electron -r ./src/main/launcher.cjs .
+// src/main/secrets.js
+// Secure storage for API keys using Electron's safeStorage
 
-const Module = require('module');
+const fs = require('fs/promises');
+const fssync = require('fs');
 const path = require('path');
+const { safeStorage } = require('electron');
+const { app } = require('electron');
 
-// Set defaultApp flag like Electron's default app loader does
-process.defaultApp = true;
+/**
+ * Secrets service for storing and retrieving sensitive data like API keys.
+ * Uses Electron's safeStorage for encryption when available, falls back to plain text in development.
+ */
+class SecretsService {
+  constructor() {
+    this._storagePath = null;
+    this.secrets = new Map(); // name => encryptedValue
+    this._initialized = false;
+  }
 
-// Save original _load
-const originalLoad = Module._load;
-
-// Shim for Electron main-process APIs
-const electronShim = {
-  _initialized: false,
-  _cache: {},
-  
-  _init() {
+  ensureInitialized() {
     if (this._initialized) return;
     this._initialized = true;
+    this.loadSecretsSync();
+  }
 
-    console.log('[launcher] Initializing electron shim');
+  get storagePath() {
+    if (!this._storagePath) {
+      this._storagePath = path.join(app.getPath('userData'), 'secrets.json');
+    }
+    return this._storagePath;
+  }
 
-    // Try to load Electron APIs as built-in modules
-    const apiNames = [
-      'app', 'BrowserWindow', 'ipcMain', 'dialog', 'shell',
-      'safeStorage', 'Menu', 'Tray', 'nativeImage', 'clipboard',
-      'crashReporter', 'desktopCapturer', 'globalShortcut',
-      'net', 'netLog', 'protocol', 'session', 'systemPreferences',
-      'webContents', 'webFrame', 'webFrameMain'
-    ];
-
-    for (const name of apiNames) {
-      try {
-        const mod = Module._load(name, null, true);
-        if (mod) {
-          this._cache[name] = mod;
-          console.log(`[launcher] Loaded ${name} as built-in module`);
-        } else {
-          console.log(`[launcher] Module._load(${name}) returned null/undefined`);
-        }
-      } catch (e) {
-        console.log(`[launcher] Failed to load ${name}: ${e.message}`);
+  /** Load secrets from the storage file synchronously. */
+  loadSecretsSync() {
+    try {
+      const data = fssync.readFileSync(this.storagePath, 'utf8');
+      const json = JSON.parse(data);
+      for (const [name, encrypted] of Object.entries(json)) {
+        this.secrets.set(name, encrypted);
+      }
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        console.error('Failed to load secrets:', err);
       }
     }
-
-    console.log('[launcher] Electron shim initialization complete');
-    console.log('[launcher] App in cache:', !!this._cache.app);
-  },
-  
-  get app() { this._init(); return this._cache.app; },
-  get BrowserWindow() { this._init(); return this._cache.BrowserWindow; },
-  get ipcMain() { this._init(); return this._cache.ipcMain; },
-  get dialog() { this._init(); return this._cache.dialog; },
-  get shell() { this._init(); return this._cache.shell; },
-  get safeStorage() { this._init(); return this._cache.safeStorage; },
-  get Menu() { this._init(); return this._cache.Menu; },
-  get Tray() { this._init(); return this._cache.Tray; },
-  get nativeImage() { this._init(); return this._cache.nativeImage; },
-  get clipboard() { this._init(); return this._cache.clipboard; },
-  get crashReporter() { this._init(); return this._cache.crashReporter; },
-  get desktopCapturer() { this._init(); return this._cache.desktopCapturer; },
-  get globalShortcut() { this._init(); return this._cache.globalShortcut; },
-  get net() { this._init(); return this._cache.net; },
-  get netLog() { this._init(); return this._cache.netLog; },
-  get protocol() { this._init(); return this._cache.protocol; },
-  get session() { this._init(); return this._cache.session; },
-  get systemPreferences() { this._init(); return this._cache.systemPreferences; },
-  get webContents() { this._init(); return this._cache.webContents; },
-  get webFrame() { this._init(); return this._cache.webFrame; },
-  get webFrameMain() { this._init(); return this._cache.webFrameMain; },
-};
-
-// Override Module._load to intercept 'electron' requires
-Module._load = function(request, parent, isMain) {
-  if (request === 'electron') {
-    console.log('[launcher] Intercepted require(electron) - returning shim');
-    return electronShim;
   }
-  return originalLoad.apply(this, arguments);
-};
 
-// Also patch the electron package in require cache immediately
-try {
-  const electronPkgPath = Module._resolveFilename('electron', module, false);
-  Module._cache[electronPkgPath] = {
-    id: 'electron',
-    filename: electronPkgPath,
-    loaded: true,
-    exports: electronShim,
-    parent: module,
-    children: []
-  };
-  console.log('[launcher] Patched electron module in require cache');
-} catch (e) {
-  console.log('[launcher] Could not patch require cache:', e.message);
+  /** @deprecated Use loadSecretsSync instead */
+  async loadSecrets() {
+    return;
+  }
+
+  /**
+   * Save secrets to the storage file.
+   */
+  async saveSecrets() {
+    this.ensureInitialized();
+    const json = Object.fromEntries(this.secrets);
+    await fs.writeFile(this.storagePath, JSON.stringify(json, null, 2));
+  }
+
+  /**
+   * Store a secret.
+   * @param {string} name - The name/identifier for the secret.
+   * @param {string} value - The plaintext secret value (e.g., API key).
+   * @returns {Promise<void>}
+   */
+  async set(name, value) {
+    this.ensureInitialized();
+    let encrypted;
+    try {
+      encrypted = safeStorage.encryptString(value);
+      encrypted = encrypted.toString('base64');
+    } catch (err) {
+      console.warn('Failed to encrypt secret, storing as plain text (not secure):', err);
+      encrypted = value;
+    }
+    this.secrets.set(name, encrypted);
+    await this.saveSecrets();
+  }
+
+  /**
+   * Retrieve a secret.
+   * @param {string} name - The name/identifier for the secret.
+   * @returns {Promise<string|null>} The decrypted secret value, or null if not found.
+   */
+  async get(name) {
+    this.ensureInitialized();
+    const encrypted = this.secrets.get(name);
+    if (encrypted === undefined) {
+      return null;
+    }
+
+    try {
+      const buffer = Buffer.from(encrypted, 'base64');
+      const decrypted = safeStorage.decryptString(buffer);
+      return decrypted;
+    } catch (err) {
+      console.warn('Failed to decrypt secret, returning as plain text:', err);
+      return encrypted;
+    }
+  }
+
+  /**
+   * Remove a secret.
+   * @param {string} name - The name/identifier for the secret.
+   * @returns {Promise<void>}
+   */
+  async remove(name) {
+    this.ensureInitialized();
+    this.secrets.delete(name);
+    await this.saveSecrets();
+  }
+
+  /**
+   * List all secret names (but not their values).
+   * @returns {Array<string>} Array of secret names.
+   */
+  list() {
+    this.ensureInitialized();
+    return Array.from(this.secrets.keys());
+  }
+
+  /**
+   * Check if a secret exists.
+   * @param {string} name - The name/identifier for the secret.
+   * @returns {boolean} True if the secret exists.
+   */
+  has(name) {
+    this.ensureInitialized();
+    return this.secrets.has(name);
+  }
 }
 
-global.electronMainExports = electronShim;
-console.log('[launcher] Electron shim installed');
+const secretsService = new SecretsService();
+module.exports = { secretsService };

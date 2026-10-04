@@ -2,9 +2,9 @@
   "name": "supru",
   "version": "0.1.0",
   "description": "Supru - installable desktop AI coding app",
-  "main": "src/main/entry.js",
+  "main": "src/main/main.cjs",
   "scripts": {
-    "start": "electron -r ./src/main/launcher.cjs .",
+    "start": "electron .",
     "dist": "electron-builder"
   },
   "author": "",
