@@ -2,9 +2,6 @@ name: macOS Build (Explicit Xcode 15.4)
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    tags: ['v*']
 
 permissions:
   contents: write
