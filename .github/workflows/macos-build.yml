@@ -33,6 +33,11 @@ jobs:
           xcodebuild -showsdks
           echo "DEVELOPER_DIR=$(xcode-select -p)"
 
+      - name: Setup Python with distutils
+        run: |
+          brew install python@3.12
+          echo "/opt/homebrew/opt/python@3.12/libexec/bin" >> $GITHUB_PATH
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -43,7 +48,7 @@ jobs:
         run: npm ci
 
       - name: Rebuild native modules
-        run: npx electron-rebuild -f -w node-pty
+        run: npx @electron/rebuild -f -w node-pty
 
       - name: Build .dmg
         run: npm run dist
