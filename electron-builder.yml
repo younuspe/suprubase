@@ -26,6 +26,7 @@ files:
 asarUnpack:
   - node-pty/**/*
   - node-pty-build/**/*
+publish: null  # Disable auto-publishing
 mac:
   target: dmg
   icon: build/icon.icns
