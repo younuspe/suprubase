@@ -1,6 +1,40 @@
+# Dependencies
 node_modules/
+package-lock.json
+
+# Build outputs
 dist/
+build/
+*.dmg
+*.exe
+*.AppImage
+*.deb
+*.rpm
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
 .DS_Store
-.env
-.env.*
+Thumbs.db
+
+# Logs
 *.log
+npm-debug.log*
+electron-builder.log
+
+# Test outputs
+coverage/
+.nyc_output/
+
+# Local config
+*.local.js
+*.local.json
+
+# Temporary files
+*.tmp
+*.temp

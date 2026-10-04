@@ -1,5 +1,0 @@
-{
-  "name": "suprubase",
-  "type": "module",
-  "main": "src/main/entry.mjs"
-}
