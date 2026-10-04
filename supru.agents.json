@@ -1,0 +1,38 @@
+{
+  "agents": [
+    {
+      "id": "test-agent-1",
+      "role": "developer",
+      "duties": ["Write code"],
+      "skills": ["JavaScript"],
+      "model": {
+        "provider": "anthropic",
+        "id": "claude-3-opus"
+      },
+      "tools": {
+        "allow": ["fs:read", "fs:write"],
+        "ask": ["fs:delete"],
+        "deny": ["shell:run"]
+      },
+      "fs": {
+        "read": ["**/*.js"],
+        "write": ["**/*.js"],
+        "deny": ["**/node_modules/**"]
+      },
+      "shell": {
+        "allow": ["npm test"],
+        "deny": ["rm -rf*"]
+      },
+      "limits": {
+        "maxTurns": 10,
+        "maxTokens": 10000,
+        "maxCostUsd": 1.0,
+        "timeoutSec": 300
+      },
+      "stages": [
+        { "id": "stage1", "task": "Analyze code" },
+        { "id": "stage2", "task": "Implement feature", "dependsOn": ["stage1"] }
+      ]
+    }
+  ]
+}

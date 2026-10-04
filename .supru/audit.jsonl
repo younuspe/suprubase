@@ -1,0 +1,62 @@
+{"timestamp":"2026-10-03T16:21:23.540Z","tool":"fs:read","args":"{\"path\":\"src/main/agentRunner.js\"}","agentId":null}
+{"timestamp":"2026-10-03T16:21:23.544Z","tool":"fs:read","args":"[\"src/main/agentRunner.js\"]","agentId":null}
+{"timestamp":"2026-10-03T16:21:23.545Z","tool":"fs:read","args":"{\"path\":\"src/main/secret.txt\",\"reason\":\"Path not allowed for fs:read\"}","agentId":null}
+{"timestamp":"2026-10-03T16:21:23.545Z","tool":"fs:delete","args":"{\"path\":\"src/main/test.js\"}","agentId":null}
+{"timestamp":"2026-10-03T16:21:23.545Z","tool":"fs:delete","args":"[\"src/main/test.js\"]","agentId":null}
+{"timestamp":"2026-10-03T16:21:23.546Z","tool":"fs:read","args":"{\"path\":\".env\",\"reason\":\"Access to secret file denied\"}","agentId":null}
+{"timestamp":"2026-10-03T16:21:23.546Z","tool":"shell:run","args":"{\"command\":\"rm -rf /\",\"reason\":\"Command denied by shell policy\"}","agentId":null}
+{"timestamp":"2026-10-03T16:21:23.546Z","tool":"fs:write","args":"{\"path\":\"test_audit.js\",\"reason\":\"Path not allowed for fs:write\"}","agentId":null}
+{"timestamp":"2026-10-03T17:24:32.589Z","tool":"fs:read","args":"{\"path\":\"src/main/agentRunner.js\"}","agentId":null}
+{"timestamp":"2026-10-03T17:24:32.592Z","tool":"fs:read","args":"[\"src/main/agentRunner.js\"]","agentId":null}
+{"timestamp":"2026-10-03T17:24:32.593Z","tool":"fs:read","args":"{\"path\":\"src/main/secret.txt\",\"reason\":\"Path not allowed for fs:read\"}","agentId":null}
+{"timestamp":"2026-10-03T17:24:32.593Z","tool":"fs:delete","args":"{\"path\":\"src/main/test.js\"}","agentId":null}
+{"timestamp":"2026-10-03T17:24:32.593Z","tool":"fs:delete","args":"[\"src/main/test.js\"]","agentId":null}
+{"timestamp":"2026-10-03T17:24:32.594Z","tool":"fs:read","args":"{\"path\":\".env\",\"reason\":\"Access to secret file denied\"}","agentId":null}
+{"timestamp":"2026-10-03T17:24:32.594Z","tool":"shell:run","args":"{\"command\":\"git status\"}","agentId":null}
+{"timestamp":"2026-10-03T17:24:32.594Z","tool":"shell:run","args":"[\"git status\"]","agentId":null}
+{"timestamp":"2026-10-03T17:24:32.594Z","tool":"shell:run","args":"{\"command\":\"rm -rf /\",\"reason\":\"Command denied by shell policy\"}","agentId":null}
+{"timestamp":"2026-10-03T17:26:11.242Z","tool":"fs:read","args":"{\"path\":\"src/main/agentRunner.js\"}","agentId":null}
+{"timestamp":"2026-10-03T17:26:11.246Z","tool":"fs:read","args":"[\"src/main/agentRunner.js\"]","agentId":null}
+{"timestamp":"2026-10-03T17:26:11.247Z","tool":"fs:read","args":"{\"path\":\"src/main/secret.txt\",\"reason\":\"Path not allowed for fs:read\"}","agentId":null}
+{"timestamp":"2026-10-03T17:26:11.247Z","tool":"fs:delete","args":"{\"path\":\"src/main/test.js\"}","agentId":null}
+{"timestamp":"2026-10-03T17:26:11.248Z","tool":"fs:delete","args":"[\"src/main/test.js\"]","agentId":null}
+{"timestamp":"2026-10-03T17:26:11.248Z","tool":"fs:read","args":"{\"path\":\".env\",\"reason\":\"Access to secret file denied\"}","agentId":null}
+{"timestamp":"2026-10-03T17:26:11.248Z","tool":"shell:run","args":"{\"command\":\"git status\"}","agentId":null}
+{"timestamp":"2026-10-03T17:26:11.248Z","tool":"shell:run","args":"[\"git status\"]","agentId":null}
+{"timestamp":"2026-10-03T17:26:11.249Z","tool":"shell:run","args":"{\"command\":\"rm -rf /\",\"reason\":\"Command denied by shell policy\"}","agentId":null}
+{"timestamp":"2026-10-03T17:30:47.235Z","tool":"fs:read","args":"{\"path\":\"src/main/agentRunner.js\"}","agentId":null}
+{"timestamp":"2026-10-03T17:30:47.239Z","tool":"fs:read","args":"[\"src/main/agentRunner.js\"]","agentId":null}
+{"timestamp":"2026-10-03T17:30:47.240Z","tool":"fs:read","args":"{\"path\":\"src/main/secret.txt\",\"reason\":\"Path not allowed for fs:read\"}","agentId":null}
+{"timestamp":"2026-10-03T17:30:47.240Z","tool":"fs:delete","args":"{\"path\":\"src/main/test.js\"}","agentId":null}
+{"timestamp":"2026-10-03T17:30:47.241Z","tool":"fs:delete","args":"[\"src/main/test.js\"]","agentId":null}
+{"timestamp":"2026-10-03T17:30:47.241Z","tool":"fs:read","args":"{\"path\":\".env\",\"reason\":\"Access to secret file denied\"}","agentId":null}
+{"timestamp":"2026-10-03T17:30:47.241Z","tool":"shell:run","args":"{\"command\":\"git status\"}","agentId":null}
+{"timestamp":"2026-10-03T17:30:47.241Z","tool":"shell:run","args":"[\"git status\"]","agentId":null}
+{"timestamp":"2026-10-03T17:30:47.242Z","tool":"shell:run","args":"{\"command\":\"rm -rf /\",\"reason\":\"Command denied by shell policy\"}","agentId":null}
+{"timestamp":"2026-10-03T17:31:50.881Z","tool":"fs:read","args":"{\"path\":\"src/main/agentRunner.js\"}","agentId":null}
+{"timestamp":"2026-10-03T17:31:50.885Z","tool":"fs:read","args":"[\"src/main/agentRunner.js\"]","agentId":null}
+{"timestamp":"2026-10-03T17:31:50.886Z","tool":"fs:read","args":"{\"path\":\"src/main/secret.txt\",\"reason\":\"Path not allowed for fs:read\"}","agentId":null}
+{"timestamp":"2026-10-03T17:31:50.886Z","tool":"fs:delete","args":"{\"path\":\"src/main/test.js\"}","agentId":null}
+{"timestamp":"2026-10-03T17:31:50.886Z","tool":"fs:delete","args":"[\"src/main/test.js\"]","agentId":null}
+{"timestamp":"2026-10-03T17:31:50.886Z","tool":"fs:read","args":"{\"path\":\".env\",\"reason\":\"Access to secret file denied\"}","agentId":null}
+{"timestamp":"2026-10-03T17:31:50.887Z","tool":"shell:run","args":"{\"command\":\"git status\"}","agentId":null}
+{"timestamp":"2026-10-03T17:31:50.887Z","tool":"shell:run","args":"[\"git status\"]","agentId":null}
+{"timestamp":"2026-10-03T17:31:50.887Z","tool":"shell:run","args":"{\"command\":\"rm -rf /\",\"reason\":\"Command denied by shell policy\"}","agentId":null}
+{"timestamp":"2026-10-03T17:33:09.884Z","tool":"fs:read","args":"{\"path\":\"src/main/agentRunner.js\"}","agentId":null}
+{"timestamp":"2026-10-03T17:33:09.888Z","tool":"fs:read","args":"[\"src/main/agentRunner.js\"]","agentId":null}
+{"timestamp":"2026-10-03T17:33:09.889Z","tool":"fs:read","args":"{\"path\":\"src/main/secret.txt\",\"reason\":\"Path not allowed for fs:read\"}","agentId":null}
+{"timestamp":"2026-10-03T17:33:09.889Z","tool":"fs:delete","args":"{\"path\":\"src/main/test.js\"}","agentId":null}
+{"timestamp":"2026-10-03T17:33:09.890Z","tool":"fs:delete","args":"[\"src/main/test.js\"]","agentId":null}
+{"timestamp":"2026-10-03T17:33:09.890Z","tool":"fs:read","args":"{\"path\":\".env\",\"reason\":\"Access to secret file denied\"}","agentId":null}
+{"timestamp":"2026-10-03T17:33:09.890Z","tool":"shell:run","args":"{\"command\":\"git status\"}","agentId":null}
+{"timestamp":"2026-10-03T17:33:09.890Z","tool":"shell:run","args":"[\"git status\"]","agentId":null}
+{"timestamp":"2026-10-03T17:33:09.890Z","tool":"shell:run","args":"{\"command\":\"rm -rf /\",\"reason\":\"Command denied by shell policy\"}","agentId":null}
+{"timestamp":"2026-10-03T18:06:44.185Z","tool":"fs:read","args":"{\"path\":\"src/main/agentRunner.js\"}","agentId":null}
+{"timestamp":"2026-10-03T18:06:44.189Z","tool":"fs:read","args":"[\"src/main/agentRunner.js\"]","agentId":null}
+{"timestamp":"2026-10-03T18:06:44.190Z","tool":"fs:read","args":"{\"path\":\"src/main/secret.txt\",\"reason\":\"Path not allowed for fs:read\"}","agentId":null}
+{"timestamp":"2026-10-03T18:06:44.190Z","tool":"fs:delete","args":"{\"path\":\"src/main/test.js\"}","agentId":null}
+{"timestamp":"2026-10-03T18:06:44.190Z","tool":"fs:delete","args":"[\"src/main/test.js\"]","agentId":null}
+{"timestamp":"2026-10-03T18:06:44.190Z","tool":"fs:read","args":"{\"path\":\".env\",\"reason\":\"Access to secret file denied\"}","agentId":null}
+{"timestamp":"2026-10-03T18:06:44.191Z","tool":"shell:run","args":"{\"command\":\"git status\"}","agentId":null}
+{"timestamp":"2026-10-03T18:06:44.191Z","tool":"shell:run","args":"[\"git status\"]","agentId":null}
+{"timestamp":"2026-10-03T18:06:44.191Z","tool":"shell:run","args":"{\"command\":\"rm -rf /\",\"reason\":\"Command denied by shell policy\"}","agentId":null}

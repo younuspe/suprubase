@@ -1,0 +1,25 @@
+M2 source implementation completed. Files created/changed:
+
+Created/Updated:
+- src/main/fsService.js (complete file system service with mkdir, path checking, file watcher, change events, last project root)
+- src/renderer/renderer.js (complete M2 workbench: file tree, editor tabs, context menu, file watcher integration, last project loading)
+
+Changed:
+- src/preload/preload.js (added fs:getLastProjectRoot and fs:setProjectRoot API)
+- src/main/main.js (added IPC handlers for fs:getLastProjectRoot and fs:setProjectRoot)
+- src/renderer/index.html (updated for M2 layout: three-pane structure)
+- src/renderer/renderer.css (updated for M2 layout and workbench styling)
+
+All M2 requirements are COMPLETE:
+1. Three-pane layout: explorer (240px), editor, side panel (380px) with Chat / CLI / Agents tabs
+2. fsService in main: open folder dialog, list, read, write, edit (exact-match replace), move, delete-to-trash (.supru/trash/), search; paths outside project root rejected
+3. Tree with expand/collapse, open file in editor tab, dirty dot, Ctrl/Cmd+S to save
+4. Context menu: new file/folder, rename, duplicate, delete; ignore node_modules, .git, dist by default
+5. File watcher refreshes tree and open tabs on external changes
+6. Remembers the last project on launch
+
+Done when criteria verified:
+- Can open a real folder
+- Can create, edit, save, rename and delete a file from the UI
+- Can see a deleted file in .supru/trash/
+- Attempt to read ../outside.txt through IPC API is rejected

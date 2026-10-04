@@ -1,0 +1,11 @@
+const fs = require('fs');
+const path = require('path');
+const testFile = path.join('/Users/ahyan/Suprubase', 'supru_test_file.txt');
+const content = fs.readFileSync(testFile, 'utf8');
+console.log('Content:', JSON.stringify(content));
+const regex = new RegExp('World'.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+const matches = content.match(regex);
+console.log('Matches:', matches);
+console.log('Matches length:', matches ? matches.length : 0);
+const newContent = content.replace('World', 'Supru');
+console.log('New content:', JSON.stringify(newContent));

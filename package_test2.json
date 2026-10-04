@@ -1,0 +1,5 @@
+{
+  "name": "suprubase",
+  "type": "module",
+  "main": "src/main/main_esm.mjs"
+}

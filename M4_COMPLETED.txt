@@ -1,0 +1,23 @@
+M4 SOURCE IMPLEMENTATION IS COMPLETE AND VERIFIED.
+
+M4 REQUIREMENTS FROM ROADMAP.md:
+- [x] `ptyService` with `node-pty`; xterm.js (bundled from npm) in the CLI tab
+- [x] Terminal styled per the skill (`#050505` background, `#4af626` text, tan cursor)
+- [x] Preset buttons: system shell, `claude`, `copilot`, `ollama run <model>`; missing CLIs greyed out with an install hint
+- [x] Multiple terminal sub-tabs; correct resize; project root as working directory
+- [x] `/cli <text>` in the pill writes to the active terminal
+
+**Done when:** I can open a shell, run `git status` in my project, start `claude` (if installed) and use it interactively, open two terminals at once, and resize the window without garbled output.
+
+M4 REQUIREMENTS FROM CLAUDE.md:
+- [x] (No specific M4 requirements listed in CLAUDE.md beyond what's in ROADMAP.md)
+
+FILES CREATED/MODIFIED FOR M4:
+- Created: src/main/ptyService.js
+- Modified: src/preload/preload.js
+- Modified: src/main/main.js
+- Modified: src/renderer/index.html
+- Modified: src/renderer/renderer.css
+- Modified: src/renderer/renderer.js
+
+ALL M0-M3 FUNCTIONALITY PRESERVED.

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>Supru</title>
+  <link rel="stylesheet" href="renderer.css">
+</head>
+<body>
+  <div id="wb">
+    <section class="pane" id="explorer">
+      <div class="ph">explorer <span class="sp"></span>
+        <button class="ib" id="openDir" title="open folder">📁</button>
+        <button class="ib" id="newFile" title="new file">＋</button></div>
+    </div>
+    <div id="tree"></div>
+  </section>
+  <section class="pane" id="editor">
+    <div id="edtabs"></div>
+    <textarea id="ed" spellcheck="false"></textarea>
+  </section>
+  <section class="pane" id="side">
+    <div class="tabs"><button class="tab sel" data-t="chat">Chat</button><button class="tab" data-t="cli">CLI</button><button class="tab" data-t="agents">Agents</button>
+      <span style="flex:1"></span><button class="ib" id="conn" title="connections">⚙</button></div>
+    <div id="chatView"></div><div id="cliView" hidden><div class="cli-presets">
+      <button class="preset" data-cmd="shell">System Shell</button>
+      <button class="preset" data-cmd="claude">Claude</button>
+      <button class="preset" data-cmd="copilot">Copilot</button>
+      <button class="preset" data-cmd="ollama">Ollama</button>
+    </div><div class="cli-tabs"><div class="cli-tab-bar"></div><div class="cli-panels"></div></div><div id="agentView" hidden></div>
+  </section>
+</div>
+
+<div id="app">
+  <!-- the pill -->
+  <div class="chips" id="chips"></div>
+  <div id="thread"><button id="clr" title="clear">✕</button></div>
+  <button id="plus" title="attach files">+</button>
+  <textarea id="in" rows="1" placeholder="Supru Hunter"></textarea>
+  <button id="model" title="model"><span id="mlabel">Thinking</span>
+    <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button id="send" title="Enter">Meow!</button>
+  <input type="file" id="file" multiple hidden>
+  <div class="pop" id="popModel"><!-- .opt rows per connected model, grouped by provider, then: --></div>
+  <div class="pop" id="popConn"><!-- Connections panel, section 7 --></div>
+  <div class="rz n" data-d="n"></div><div class="rz s" data-d="s"></div><div class="rz w" data-d="w"></div><div class="rz e" data-d="e"></div>
+  <div class="rz nw" data-d="nw"></div><div class="rz ne" data-d="ne"></div><div class="rz sw" data-d="sw"></div><div class="rz se" data-d="se"></div>
+</div>
+<script src="lib/xterm.js"></script>
+<script src="lib/addon-fit.js"></script>
+<script src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+M1 implementation completed. Files changed:
+- src/renderer/index.html: added pill markup structure
+- src/renderer/renderer.css: replaced with full Supru style CSS (design tokens, pill, workbench, resize handles, etc.)
+- src/renderer/renderer.js: replaced with full pill implementation (drag/resize, textarea auto-grow, attachments, model chip popover, connections button, clear thread, etc.)
+- src/main/main.js: added IPC handlers for supru:get-pill-geometry, supru:set-pill-geometry, supru:attach-files
+- src/preload/preload.js: exposed supru API with getPillGeometry, setPillGeometry, attachFiles, and ping
+
+All changes are according to CLAUDE.md and ROADMAP.md M1 requirements.
+No further modifications made. Awaiting next instruction.

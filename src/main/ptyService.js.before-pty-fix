@@ -1,0 +1,101 @@
+const { ipcMain } = require('electron');
+const pty = require('node-pty');
+const path = require('path');
+
+class PtyService {
+  constructor() {
+    this.terminals = new Map(); // terminalId => { process }
+  }
+
+  /**
+   * Create a new terminal session.
+   * @param {string} cwd - Current working directory.
+   * @param {string[]} args - The command and arguments to run.
+   * @returns {Promise<string>} The terminal ID.
+   */
+  async createTerminal(cwd, args) {
+    const termId = Math.random().toString(36).substr(2, 9);
+    const shellProcess = pty.spawn(process.platform === 'win32' ? 'cmd.exe' : 'bash', args, {
+      name: 'xterm-color',
+      cwd,
+      env: process.env
+    });
+
+    shellProcess.onData((data) => {
+      // Send data to renderer
+      if (ipcMain && ipcMain.emit) {
+        ipcMain.emit('pty:data', termId, data);
+      }
+    });
+
+    shellProcess.onExit((exitCode) => {
+      // Optionally notify renderer of exit
+      if (ipcMain && ipcMain.emit) {
+        ipcMain.emit('pty:exit', termId, exitCode);
+      }
+    });
+
+    this.terminals.set(termId, { process: shellProcess });
+
+    return termId;
+  }
+
+  /**
+   * Write data to the terminal.
+   * @param {string} termId - The terminal ID.
+   * @param {string} data - The data to write.
+   */
+  writeToTerminal(termId, data) {
+    const terminal = this.terminals.get(termId);
+    if (terminal && terminal.process) {
+      terminal.process.write(data);
+    }
+  }
+
+  /**
+   * Resize the terminal.
+   * @param {string} termId - The terminal ID.
+   * @param {object} size - { cols, rows }
+   */
+  resizeTerminal(termId, size) {
+    const terminal = this.terminals.get(termId);
+    if (terminal && terminal.process) {
+      terminal.process.resize(size.cols, size.rows);
+    }
+  }
+
+  /**
+   * Kill the terminal.
+   * @param {string} termId - The terminal ID.
+   */
+  killTerminal(termId) {
+    const terminal = this.terminals.get(termId);
+    if (terminal && terminal.process) {
+      terminal.process.kill();
+      this.terminals.delete(termId);
+    }
+  }
+
+  /**
+   * Set up IPC handlers for the renderer.
+   */
+  setupIpcHandlers() {
+    ipcMain.handle('pty:create', async (event, cwd, args) => {
+      return await this.createTerminal(cwd, args);
+    });
+
+    ipcMain.on('pty:write', (event, termId, data) => {
+      this.writeToTerminal(termId, data);
+    });
+
+    ipcMain.on('pty:resize', (event, termId, size) => {
+      this.resizeTerminal(termId, size);
+    });
+
+    ipcMain.on('pty:kill', (event, termId) => {
+      this.killTerminal(termId);
+    });
+  }
+}
+
+module.exports = { PtyService };
