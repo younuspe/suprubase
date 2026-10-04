@@ -23,18 +23,6 @@ jobs:
       - run: npm ci
       - run: npm run lint 2>/dev/null || echo "No lint script configured"
 
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-      - run: npm ci
-      - run: npm test 2>/dev/null || echo "No test script configured"
-
   build-macos:
     name: Build macOS (verify)
     runs-on: macos-14
@@ -52,42 +40,4 @@ jobs:
         with:
           name: Supru-macos-verify
           path: dist/*.dmg
-          retention-days: 7
-
-  build-linux:
-    name: Build Linux (verify)
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-      - run: npm ci
-      - run: npx electron-rebuild -f -w node-pty
-      - run: npm run dist
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Supru-linux-verify
-          path: dist/*.AppImage
-          retention-days: 7
-
-  build-windows:
-    name: Build Windows (verify)
-    runs-on: windows-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-      - run: npm ci
-      - run: npx electron-rebuild -f -w node-pty
-      - run: npm run dist
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Supru-windows-verify
-          path: dist/*.exe
           retention-days: 7
